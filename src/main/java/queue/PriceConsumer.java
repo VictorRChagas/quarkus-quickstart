@@ -1,4 +1,4 @@
-package org.acme.jms;
+package queue;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,9 +16,6 @@ import javax.jms.Session;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 
-/**
- * A bean consuming prices from the JMS queue.
- */
 @ApplicationScoped
 public class PriceConsumer implements Runnable {
 
@@ -48,7 +45,6 @@ public class PriceConsumer implements Runnable {
             while (true) {
                 Message message = consumer.receive();
                 if (message == null) {
-                    // receive returns `null` if the JMSConsumer is closed
                     return;
                 }
                 lastPrice = message.getBody(String.class);
